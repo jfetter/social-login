@@ -1,0 +1,17 @@
+doctype html(lang='en')
+html
+  head
+    meta(charset='UTF-8')
+    title Social Login
+  body(ng-app='socialLogin')
+    button(ui-sref='home') home
+    button(ui-sref='login') login
+
+    ui-view
+
+    script(src='vendor/jquery/dist/jquery.min.js')
+    script(src='vendor/angular/angular.js')
+    script(src='vendor/angular-ui-router/release/angular-ui-router.min.js')
+    script(src='vendor/satellizer/satellizer.min.js')
+    script(src='js/module.js')
+    script(src='js/controllers/login.js')
