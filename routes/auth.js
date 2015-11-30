@@ -3,16 +3,15 @@
 var express = require('express');
 var router = express.Router();
 
+var qs = require('querystring');
+var jwt = require('jwt-simple');
+var request = require('request');
+
+var User = require('../models/user');
+
 // AUTH
 
-/*
- |--------------------------------------------------------------------------
- | Login with GitHub
- |--------------------------------------------------------------------------
- */
-
-/*
-router.post('/auth/github', function(req, res) {
+router.post('/github', function(req, res) {
   var accessTokenUrl = 'https://github.com/login/oauth/access_token';
   var userApiUrl = 'https://api.github.com/user';
   var params = {
@@ -29,6 +28,7 @@ router.post('/auth/github', function(req, res) {
 
     // Step 2. Retrieve profile information about the current user.
     request.get({ url: userApiUrl, qs: accessToken, headers: headers, json: true }, function(err, response, profile) {
+      console.log('profile:', profile);
 
       // Step 3a. Link user accounts.
       if (req.headers.authorization) {
@@ -37,7 +37,7 @@ router.post('/auth/github', function(req, res) {
             return res.status(409).send({ message: 'There is already a GitHub account that belongs to you' });
           }
           var token = req.headers.authorization.split(' ')[1];
-          var payload = jwt.decode(token, config.TOKEN_SECRET);
+          var payload = jwt.decode(token, process.env.JWT_SECRET);
           User.findById(payload.sub, function(err, user) {
             if (!user) {
               return res.status(400).send({ message: 'User not found' });
@@ -46,7 +46,7 @@ router.post('/auth/github', function(req, res) {
             user.picture = user.picture || profile.avatar_url;
             user.displayName = user.displayName || profile.name;
             user.save(function() {
-              var token = createJWT(user);
+              var token = user.createJWT();
               res.send({ token: token });
             });
           });
@@ -55,7 +55,7 @@ router.post('/auth/github', function(req, res) {
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ github: profile.id }, function(err, existingUser) {
           if (existingUser) {
-            var token = createJWT(existingUser);
+            var token = existingUser.createJWT();
             return res.send({ token: token });
           }
           var user = new User();
@@ -63,7 +63,7 @@ router.post('/auth/github', function(req, res) {
           user.picture = profile.avatar_url;
           user.displayName = profile.name;
           user.save(function() {
-            var token = createJWT(user);
+            var token = user.createJWT();
             res.send({ token: token });
           });
         });
@@ -71,6 +71,5 @@ router.post('/auth/github', function(req, res) {
     });
   });
 });
-*/
 
 module.exports = router;
