@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Social Login</title>
+</head>
+<body ng-app='socialLogin'>
+  <button ui-sref='home'>home</button>
+  <button ui-sref='login'>login</button>
+
+  <ui-view></ui-view>
+  
+  <script src="vendor/jquery/dist/jquery.min.js"></script>
+  <script src="vendor/angular/angular.js"></script>
+  <script src="vendor/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="vendor/satellizer/satellizer.min.js"></script>
+  <script src="js/module.js"></script>
+  <script src="js/controllers/login.js"></script>
+</body>
+</html>
