@@ -17,4 +17,18 @@ router.get('/me', ensureAuthenticated, function(req, res) {
   })
 });
 
+
+///get/all is untested as of 6:40AM ... need to get more logins working
+router.get('/all', ensureAuthenticated, function(req, res) {
+  User.find({}, function(err, users){
+    console.log(users)
+    res.send({users
+    	// var userNames = users.map(function(item, index, all){
+    	// 	return item.username
+    	// })
+     //  userNames;
+    });
+  })
+});
+
 module.exports = router;

@@ -8,10 +8,14 @@ var morgan = require('morgan');
 
 var app = express();
 
+require('dotenv').load();
+
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://127.0.0.1/socialLogin');
 
 app.set('view engine', 'jade');
+
+
 
 // GENERAL MIDDLEWARE
 app.use(morgan('dev'));
@@ -23,6 +27,7 @@ app.use(express.static('public'));
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
+app.us("/threads", require("./routes/threads"));
 
 // 404 HANDLER
 app.use(function(req, res){
