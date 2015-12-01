@@ -3,9 +3,17 @@ html
   head
     meta(charset='UTF-8')
     title Social Login
+    link(href='css/style.css', rel='stylesheet')
   body(ng-app='socialLogin')
-    button(ui-sref='home') home
-    button(ui-sref='login') login
+    div(ng-controller='navCtrl')
+      button(ui-sref='home') home
+
+      span(ng-if='!isAuthenticated()')
+        button(ui-sref='login') login
+
+      span(ng-if='isAuthenticated()')
+        button(ui-sref='profile') profile
+        button(ng-click='logout()') logout
 
     ui-view
 
@@ -16,3 +24,5 @@ html
     script(src='js/module.js')
     script(src='js/controllers/login.js')
     script(src='js/controllers/home.js')
+    script(src='js/controllers/profile.js')
+    script(src='js/controllers/nav.js')

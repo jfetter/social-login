@@ -9,7 +9,7 @@ var morgan = require('morgan');
 var app = express();
 
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/socialLogin');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://127.0.0.1/socialLogin');
 
 app.set('view engine', 'jade');
 
@@ -22,6 +22,7 @@ app.use(express.static('public'));
 // ROUTES
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
+app.use('/users', require('./routes/users'));
 
 // 404 HANDLER
 app.use(function(req, res){

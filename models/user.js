@@ -13,7 +13,10 @@ var userSchema = Schema({
   // password: { type: String, select: false },
   displayName: String,
   picture: String,
-  github: String
+  github: String,
+  google: String,
+  twitter: String,
+  facebook: String
 });
 
 
@@ -25,7 +28,6 @@ userSchema.methods.createJWT = function() {
   };
   return jwt.encode(payload, process.env.JWT_SECRET);
 };
-
 
 User = mongoose.model('User', userSchema);
 module.exports = User;
